@@ -1,0 +1,37 @@
+from collections import deque
+
+def BFS(visited, mat):
+    count = 0
+    #1번 노드 및 depth == count
+    que = deque([[1, count]])
+    
+    while que :
+        v,count = que.popleft()
+        
+        #not visited
+        if visited[v] ==-1:
+            visited[v] = count
+            count+=1
+            
+            #인접 노드가 맞으면 que에 추가
+            for a in mat[v]:
+                que.append([a,count])
+    
+    count = 0
+    # 가장 먼 노드 수 체크
+    for v in visited:
+        if v == max(visited):
+            count +=1
+    return count
+
+def solution(n, edge): 
+    visited = [-1]*(n+1)
+    mat = [[] for _ in range(n+1)]
+    
+    #mat 인덱스 번째 노드에서의 인접 노드
+    for a,b in edge:
+        mat[a].append(b)
+        mat[b].append(a)
+        
+    answer = BFS(visited,mat)
+    return answer
